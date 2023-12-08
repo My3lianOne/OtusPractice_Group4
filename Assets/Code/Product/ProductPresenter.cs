@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UniRx;
 
 namespace Code
 {
     public sealed class ProductPresenter : IProductPresenter
     {
+        public event Action OnBuyRequested;
         private readonly ProductInfo _productInfo;
         private readonly ProductBuyer _productBuyer;
         public string Title { get; }
@@ -45,8 +47,8 @@ namespace Code
 
         public void Buy()
         {
-            
-            _productBuyer.Buy(_productInfo);
+            OnBuyRequested?.Invoke();
+            //_productBuyer.Buy(_productInfo);
         }
         
         ~ProductPresenter()

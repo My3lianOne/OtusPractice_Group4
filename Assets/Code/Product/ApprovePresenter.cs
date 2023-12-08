@@ -1,10 +1,13 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using UnityEngine;
 
 namespace Code
 {
-    internal class ApprovePresenter : IApprovePresenter
+    public class ApprovePresenter : IApprovePresenter
     {
+        public event Action<bool> OnActiveChanged; 
+        private readonly ProductBuyer _productBuyer;
         private ProductInfo _productInfo;
         public ApprovePresenter(ProductInfo productInfo)
         {
@@ -16,14 +19,30 @@ namespace Code
         public string Price { get; }
         public IReadOnlyReactiveProperty<bool> CanBuy { get; }
         public ReactiveCommand BuyCommand { get; }
+
+        public ApprovePresenter(ProductBuyer productBuyer)
+        {
+            _productBuyer = productBuyer;
+        }
+
+        public void Show()
+        {
+            OnActiveChanged?.Invoke(true);
+        }
+
+        public void Hide()
+        {
+            OnActiveChanged?.Invoke(false);
+        }
+
         public void Buy()
         {
-            throw new System.NotImplementedException();
+            _productBuyer.Buy(_productInfo);
         }
 
         public void Cancel()
         {
-            throw new System.NotImplementedException();
+            Hide();
         }
     }
 }
