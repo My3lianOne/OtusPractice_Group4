@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Code
 {
-    internal interface IApprovePresenter
+    public interface IApprovePresenter
     {
         string Title { get; }
         Sprite Icon { get; }
